@@ -9,3 +9,8 @@ Cypress.Commands.add('login', (user = Cypress.env('user_name'), password = Cypre
 
     login()
 })
+
+Cypress.Commands.add('logout', () => {
+    cy.get('.qa-user-avatar').click()
+    cy.contains('Sign out').click()
+  })
