@@ -1,4 +1,4 @@
-Cypress.Commands.add('login', (user = Cypress.env('user_name'), password = Cypress.env('user_password'),) => {
+Cypress.Commands.add('login', (user = Cypress.env('user_name'), password = Cypress.env('user_password'), { cacheSession = true } = {},) => {
     const login = () => {
         cy.visit('/users/sign_in')
 
@@ -7,7 +7,15 @@ Cypress.Commands.add('login', (user = Cypress.env('user_name'), password = Cypre
         cy.get("[data-qa-selector='sign_in_button']").click()
     }
 
-    login()
+    const options = {
+        cacheAcrossSpecs: true,
+    }
+
+    if (cacheSession) {
+        cy.session(user, login, options)
+    } else {
+        login()
+    }
 })
 
 Cypress.Commands.add('logout', () => {
