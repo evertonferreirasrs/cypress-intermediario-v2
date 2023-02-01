@@ -7,8 +7,14 @@ Cypress.Commands.add('login', (user = Cypress.env('user_name'), password = Cypre
         cy.get("[data-qa-selector='sign_in_button']").click()
     }
 
+    const validate = () => {
+        cy.visit('/')
+        cy.location('pathname', { timeout: 1000 }).should('not.eq', '/users/sign_in')
+    }
+
     const options = {
         cacheAcrossSpecs: true,
+        validate,
     }
 
     if (cacheSession) {
